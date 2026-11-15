@@ -2,6 +2,7 @@
 
 FinExtract 是一款金融公告结构化提取工具。Windows 便携版包含本地服务、浏览器界面和使用手册。
 
+- [快速上手：下载、启动与配置](README-QUICKSTART.md)
 - [在线项目主页](https://heyanfeng-barca.github.io/FinExtract/)
 - [在线使用手册](https://heyanfeng-barca.github.io/FinExtract/manual.html)
 - [下载 Windows 便携版 v1.0](https://github.com/Heyanfeng-BARCA/FinExtract/releases/download/v1.0/FinExtract_Windows_Portable_v1.0.zip)
