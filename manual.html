@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinExtract 操作手册 — Windows 便携版 v1.0</title>
+<style>
+  :root{
+    --ink:#102338; --accent:#315AC5; --gold:#B69A70; --bg:#F4F6F9;
+    --text:#334155; --muted:#64748B; --line:#E2E8F0; --ok:#087F5B; --warn:#9A6700;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15px}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 24px 80px}
+  header.hero{background:linear-gradient(135deg,var(--ink) 0%,#1B3A5C 100%);color:#fff;border-radius:14px;padding:44px 44px 38px;margin-bottom:28px}
+  header.hero h1{font-size:27px;letter-spacing:.02em;margin-bottom:10px}
+  header.hero .sub{color:#C9D6E8;font-size:14px}
+  header.hero .tag{display:inline-block;margin-top:16px;border:1px solid rgba(182,154,112,.7);color:var(--gold);border-radius:999px;padding:3px 14px;font-size:12.5px}
+  h2{font-size:20px;color:var(--ink);margin:38px 0 14px;padding-left:12px;border-left:4px solid var(--gold)}
+  h3{font-size:16px;color:var(--ink);margin:22px 0 8px}
+  p{margin:8px 0}
+  ul,ol{padding-left:22px;margin:8px 0}
+  li{margin:5px 0}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin:14px 0}
+  .steps{counter-reset:st}
+  .step{position:relative;padding:14px 18px 14px 64px;background:#fff;border:1px solid var(--line);border-radius:12px;margin:10px 0}
+  .step::before{counter-increment:st;content:counter(st);position:absolute;left:16px;top:16px;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .step b{color:var(--ink)}
+  code,.path{font-family:Consolas,"Courier New",monospace;background:#EEF2F7;border:1px solid var(--line);border-radius:5px;padding:1px 7px;font-size:13px;color:var(--ink)}
+  .pathblock{font-family:Consolas,monospace;background:#0F2136;color:#D8E4F2;border-radius:9px;padding:13px 18px;font-size:13px;margin:10px 0;overflow-x:auto;white-space:pre}
+  table{width:100%;border-collapse:collapse;margin:12px 0;background:#fff;border-radius:10px;overflow:hidden;font-size:14px}
+  th{background:var(--ink);color:#fff;text-align:left;padding:10px 14px;font-weight:600;font-size:13.5px}
+  td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  tr:nth-child(even) td{background:#F8FAFC}
+  .tip{border-left:4px solid var(--ok);background:#F0F7F4;border-radius:0 9px 9px 0;padding:12px 16px;margin:12px 0;font-size:14px}
+  .warn{border-left:4px solid var(--warn);background:#FBF6EC;border-radius:0 9px 9px 0;padding:12px 16px;margin:12px 0;font-size:14px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  .pill{display:inline-block;border-radius:999px;padding:2px 12px;font-size:12.5px;font-weight:600;margin-right:6px}
+  .pill.swift{background:#EAF1FB;color:var(--accent);border:1px solid #C9D9F2}
+  .pill.balance{background:#F5F0E6;color:#7A5F33;border:1px solid #E4D5B8}
+  .pill.must{background:var(--gold);color:#fff;border:1px solid var(--gold);vertical-align:2px}
+  footer{margin-top:50px;color:var(--muted);font-size:12.5px;text-align:center;border-top:1px solid var(--line);padding-top:18px}
+  @media print{body{background:#fff}.wrap{max-width:100%;padding:0}header.hero{border-radius:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>FinExtract 金融公告结构化提取系统</h1>
+  <div class="sub">Windows 便携版 · 操作手册 · 版本 1.0</div>
+  <div class="tag">解压即用 · 无需安装 Python · 数据全程本机保存</div>
+</header>
+
+<h2>一、产品简介</h2>
+<div class="card">
+  <p>FinExtract 用于将<b>非标准化的上市公司公告</b>（股份质押、中标、股权变动等）自动转换为<b>结构化数据</b>：识别事件、提取字段、绑定原文证据、执行业务规则校验，并输出可供审查的完整记录。</p>
+  <p>系统提供两档处理方案：</p>
+  <p>
+    <span class="pill swift">迅捷 · 高效处理</span>
+    以 DeepSeek 完成主提取，配合条件修复规则，速度快，适合日常批量处理。
+  </p>
+  <p>
+    <span class="pill balance">智衡 · 专业处理</span>
+    在迅捷能力之上，风险触发时自动执行跨模型独立复核（Qwen Plus），并生成公告要点摘要、关键数值汇总与风险差异审阅，适合重要公告的深度审查。
+  </p>
+</div>
+
+<h2>二、运行环境要求</h2>
+<div class="card">
+  <table>
+    <tr><th style="width:180px">项目</th><th>要求</th></tr>
+    <tr><td>操作系统</td><td>Windows 10 / 11（64 位）</td></tr>
+    <tr><td>安装依赖</td><td>无需安装 Python 或任何运行环境，解压即可使用</td></tr>
+    <tr><td>内存 / 磁盘</td><td>建议 8 GB 以上内存；预留 3 GB 以上磁盘空间（含 OCR 模型与任务数据）</td></tr>
+    <tr><td>网络</td><td>处理任务时需联网调用模型服务；仅浏览历史任务与页面时无需联网</td></tr>
+    <tr><td>浏览器</td><td>Edge / Chrome 等现代浏览器（启动时会自动打开默认浏览器）</td></tr>
+  </table>
+</div>
+
+<h2>三、配置模型密钥 <span class="pill must">重点必读 · 开始分析前的必要步骤</span></h2>
+<div class="warn"><b>请务必先完成本章，再开始分析。</b>未配置密钥时，系统页面可以正常打开浏览，但<b>无法创建任何提取任务</b>——上传区会提示「提取核心不可用」，首页会显示金色提示横幅。整个配置约需 3–5 分钟，<b>只需做一次</b>，以后使用无需重复配置。</div>
+
+<div class="card">
+  <h3>第 1 步：获取模型密钥（已有密钥可跳过）</h3>
+  <p>系统使用两家模型服务商，按需获取对应的 API Key：</p>
+  <table>
+    <tr><th style="width:200px">密钥名称</th><th>用途</th><th style="width:230px">获取地址</th><th style="width:90px">是否必需</th></tr>
+    <tr><td><code>DEEPSEEK_API_KEY</code></td><td>迅捷 / 智衡的主处理模型（DeepSeek）</td><td>platform.deepseek.com</td><td><b>必需</b></td></tr>
+    <tr><td><code>QWEN_API_KEY</code></td><td>智衡方案的独立复核模型（Qwen Plus）</td><td>阿里云百炼 bailian.console.aliyun.com</td><td>推荐</td></tr>
+  </table>
+  <p><b>DeepSeek 密钥获取方法</b>：打开 platform.deepseek.com → 注册 / 登录 → 左侧菜单「API keys」→「创建 API key」→ 复制以 <code>sk-</code> 开头的密钥（<b>只显示一次，请立即妥善保存</b>）。调用前请在「充值」页面确认账户有余额。</p>
+  <p><b>Qwen Plus 密钥获取方法</b>：打开阿里云百炼控制台 bailian.console.aliyun.com → 开通百炼服务 → 右上角「API-KEY」→「创建我的 API-KEY」→ 复制以 <code>sk-</code> 开头的密钥。新开通用户通常有免费调用额度。</p>
+</div>
+
+<div class="card">
+  <h3>第 2 步：打开配置目录</h3>
+  <ol>
+    <li>按键盘 <code>Win + E</code> 打开「文件资源管理器」；</li>
+    <li>点击窗口顶部的<b>地址栏</b>，粘贴下面这段路径，按回车：<br><span class="path">%LOCALAPPDATA%\FinExtract\config</span></li>
+    <li>如果提示「文件夹不存在」：先双击启动一次 FinExtract（启动时会自动创建该目录），或在 <span class="path">%LOCALAPPDATA%\FinExtract</span> 下手动新建一个名为 <code>config</code> 的文件夹。</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>第 3 步：新建密钥配置文件</h3>
+  <ol>
+    <li>在 config 文件夹的<b>空白处点击鼠标右键</b> →「新建」→「文本文档」；</li>
+    <li>把文件命名为 <code>API.env</code>（<b>文件名其实任意</b>——keys.txt、我的密钥.txt 均可，程序启动时会自动扫描该目录下所有文件；推荐统一用 <code>API.env</code> 便于管理）。<br>
+        <span style="color:var(--muted);font-size:13.5px">提示：若 Windows 隐藏了扩展名，文件实际名字可能是 <code>API.env.txt</code>，同样可以被正常识别，不影响使用。</span></li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>第 4 步：写入密钥并保存</h3>
+  <ol>
+    <li>双击刚新建的文件，用记事本打开；</li>
+    <li>复制下面两行内容粘贴进去，并把 <code>sk-你的…密钥</code> 替换为第 1 步获取到的真实密钥（<b>等号两侧不要留空格，密钥不要加引号</b>）：</li>
+  </ol>
+  <div class="pathblock">DEEPSEEK_API_KEY=sk-你的DeepSeek密钥
+QWEN_API_KEY=sk-你的百炼密钥</div>
+  <ol start="3">
+    <li>按 <code>Ctrl + S</code> 保存，关闭记事本。只有 DeepSeek 密钥时只写第一行即可——智衡方案仍可执行主提取与规则校验，只是独立复核环节会如实标注「未配置 / 未执行」。</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>第 5 步：重启程序并验证配置成功</h3>
+  <ol>
+    <li>关闭 FinExtract 的黑色启动窗口，重新双击 <code>启动 FinExtract.bat</code>；</li>
+    <li>程序启动时会自动对模型做<b>真实连接验证</b>（联网，约需几秒钟）；</li>
+    <li>配置成功的两个标志：① 首页<b>不再显示</b>金色「尚未配置模型密钥」提示横幅；② 进入「智能文档处理」页，方案卡片显示绿色状态「可用 · 以本次配置为准」。此时即可开始上传分析。</li>
+  </ol>
+  <div class="tip">修改或更换密钥后<b>必须重启程序</b>才会生效；系统会按新密钥自动重新验证，不会沿用旧的缓存结果。</div>
+</div>
+
+<div class="card">
+  <h3>配置后仍不可用？逐项自查</h3>
+  <table>
+    <tr><th style="width:220px">检查项</th><th>正确做法</th></tr>
+    <tr><td>变量名拼写</td><td>必须严格为 <code>DEEPSEEK_API_KEY</code> 与 <code>QWEN_API_KEY</code>（全大写、下划线），不能多写字母或空格</td></tr>
+    <tr><td>等号格式</td><td>写成 <code>KEY=sk-xxx</code> 一行一个；等号两侧无空格；密钥前后不要加引号</td></tr>
+    <tr><td>文件位置</td><td>配置文件必须放在 <span class="path">%LOCALAPPDATA%\FinExtract\config\</span> 目录内，而不是程序解压目录</td></tr>
+    <tr><td>是否已重启</td><td>每次修改密钥后，必须完全关闭启动窗口再重新启动程序</td></tr>
+    <tr><td>账户状态</td><td>DeepSeek 账户需有余额；百炼需已开通服务且密钥未过期 / 未删除</td></tr>
+    <tr><td>网络连接</td><td>启动验证需要联网；公司网络若有限制，请确认能访问 api.deepseek.com 与 dashscope.aliyuncs.com</td></tr>
+  </table>
+</div>
+<div class="warn"><b>隐私说明</b>：密钥只保存在你自己电脑的 config 目录中，不随程序分发、不会上传；除调用模型服务本身外，系统不会把密钥发送给任何第三方，日志中也只显示密钥名称、绝不显示完整内容。</div>
+
+<h2>四、分包安装说明（如收到的是两个压缩包）</h2>
+<div class="card">
+  <p>为便于传输，便携版可能拆分为 <b>2 个压缩包</b>分发（均不超过 100 MB）。两个包<b>缺一不可</b>，需要<b>解压到同一文件夹</b>合并后才能运行。</p>
+  <table>
+    <tr><th style="width:280px">文件</th><th style="width:110px">大小</th><th>内容</th></tr>
+    <tr>
+      <td><code>FinExtract_v1.0_Part1_主程序.zip</code></td>
+      <td>约 60 MB</td>
+      <td>启动器 <code>FinExtract.exe</code>、启动/关闭脚本、本手册、SHA256 校验文件，以及 <code>_internal\</code> 中的 Python 运行时、业务代码、Web 框架等小体量依赖</td>
+    </tr>
+    <tr>
+      <td><code>FinExtract_v1.0_Part2_AI引擎.zip</code></td>
+      <td>约 87 MB</td>
+      <td><code>_internal\cv2</code>、<code>_internal\pymupdf</code>、<code>_internal\onnxruntime</code>、<code>_internal\rapidocr_onnxruntime</code> —— PDF 解析与 OCR 图像识别引擎</td>
+    </tr>
+  </table>
+
+  <h3>合并安装步骤</h3>
+  <div class="steps">
+    <div class="step"><b>建目录</b>：在想要安装的位置新建一个空文件夹，例如 <code>D:\Apps\FinExtract\</code>（路径可含中文，建议避免特殊符号）。</div>
+    <div class="step"><b>解压 Part 1</b>：右键 <code>FinExtract_v1.0_Part1_主程序.zip</code> →「全部解压」→ 选择刚建好的文件夹，得到 <code>FinExtract_Windows_Portable_v1.0\</code> 目录。</div>
+    <div class="step"><b>解压 Part 2 到同一位置</b>：右键 <code>FinExtract_v1.0_Part2_AI引擎.zip</code> →「全部解压」→ <b>选择同一个目标文件夹</b>。Windows 提示「目标已包含名为 _internal 的文件夹」时，选择<b>「合并 / 是」</b>。</div>
+    <div class="step"><b>核对结构</b>：进入 <code>FinExtract_Windows_Portable_v1.0\</code>，应能看到 <code>FinExtract.exe</code>、<code>启动 FinExtract.bat</code> 与 <code>_internal\</code> 文件夹并列；<code>_internal\</code> 内应同时存在 <code>cv2</code>、<code>pymupdf</code>、<code>onnxruntime</code>、<code>rapidocr_onnxruntime</code> 四个子文件夹。</div>
+    <div class="step"><b>启动</b>：双击 <code>启动 FinExtract.bat</code>，按第三章完成密钥配置即可开始使用。</div>
+  </div>
+
+  <div class="warn">
+    <b>两个包缺一不可</b>：只解压 Part 1 启动时会因缺少 cv2 / pymupdf 导致 PDF 与扫描件识别失败；只解压 Part 2 没有启动器无法运行。<br>
+    <b>必须合并到同一目录</b>：解压时请确认 Part 2 的目标位置与 Part 1 完全一致，不要让解压软件把它套到子目录里，否则程序找不到 OCR 依赖。<br>
+    <b>校验完整性</b>：合并完成后，可参考 Part 1 中的 <code>SHA256.txt</code> 校验 <code>FinExtract.exe</code> 的哈希值，确认两个包均未损坏。
+  </div>
+
+  <div class="tip">
+    <b>单包版说明</b>：如果你收到的是单一压缩包 <code>FinExtract_Windows_Portable_v1.0.zip</code>（约 146 MB），无需合并，直接解压即可，跳过本章进入第五章。
+  </div>
+</div>
+
+<h2>五、快速开始（请先完成第三章密钥配置）</h2>
+<div class="steps">
+  <div class="step"><b>解压 / 合并分包</b>：单包版直接将 <code>FinExtract_Windows_Portable_v1.0.zip</code> 解压到任意文件夹；分包版请按<b>第四章</b>把 Part 1 与 Part 2 解压合并到同一文件夹。</div>
+  <div class="step"><b>配置密钥（首次使用必做）</b>：按<b>第三章</b>完成模型密钥配置。这是一次性步骤，已配置过的用户可直接跳到下一步。</div>
+  <div class="step"><b>启动</b>：双击 <code>启动 FinExtract.bat</code>。首次启动会初始化数据目录并加载组件，请等待约 10–30 秒（部分电脑首次需 1–3 分钟），浏览器将自动打开系统首页。</div>
+  <div class="step"><b>开始分析</b>：在「智能文档处理」页上传公告文件，选择处理方案，即可开始提取。处理完成后在「数据审查中心」逐字段核对结果。</div>
+</div>
+<div class="tip">若浏览器没有自动打开，请手动访问启动窗口中显示的地址（默认 <code>http://127.0.0.1:8000/</code>）。</div>
+<div class="warn">首次运行时，Windows SmartScreen 可能提示「已保护你的电脑」——这是未签名程序的常规提示。点击「更多信息」→「仍要运行」即可。</div>
+
+<h2>六、四大页面使用指南</h2>
+<div class="card">
+  <h3>1. 工作台</h3>
+  <p>总览已处理公告数、成功率、已发布字段与待复核数量；查看处理任务分布与最近任务列表，可按处理方案筛选。</p>
+  <h3>2. 智能文档处理</h3>
+  <p>拖拽或点击上传公告文件（可多选），选择处理方案后提交。页面实时显示解析、事件识别、字段提取、校验修复各阶段进度；失败任务会保留原因并支持重试。</p>
+  <h3>3. 数据审查中心</h3>
+  <p>按任务逐字段核对提取结果：左侧为原文证据与审计信息，右侧为字段值与审核操作。智衡任务额外提供「公告要点摘要」「关键数值汇总」与「风险与异常审阅」（逐条列出复核发现的差异）。支持备注、复核与发布状态管理，并可导出 Excel / CSV / JSON。</p>
+  <h3>4. 质量评估与分析</h3>
+  <p>对已完成任务执行无参考可靠性诊断：结构规范率、证据关联率、规则通过率与需关注问题数量；支持导出质量报告。</p>
+</div>
+
+<h2>七、支持的文件格式</h2>
+<div class="card">
+  <table>
+    <tr><th style="width:220px">格式</th><th>说明</th></tr>
+    <tr><td>PDF（文字版）</td><td>直接解析文字层，效果最佳</td></tr>
+    <tr><td>PDF（扫描件）</td><td>自动调用本地 OCR 识别（纯 CPU，无需联网下载模型），耗时略长</td></tr>
+    <tr><td>Word（.docx）</td><td>解析段落与表格</td></tr>
+    <tr><td>Excel（.xlsx）</td><td>解析工作表与单元格</td></tr>
+    <tr><td>PowerPoint（.pptx）</td><td>解析文本框与表格</td></tr>
+    <tr><td>HTML / TXT / MD / CSV / JSON</td><td>解析正文与表格结构</td></tr>
+    <tr><td>图片（.jpg / .png 等）</td><td>OCR 识别中文文字</td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:13.5px">单文件建议不超过 50 MB；超长文档会自动分块处理。</p>
+</div>
+
+<h2>八、数据安全与隐私</h2>
+<div class="card">
+  <ul>
+    <li><b>本机存储</b>：全部任务数据（数据库、上传原件、提取结果、导出文件、日志）保存在 <span class="path">%LOCALAPPDATA%\FinExtract\</span>，不写入程序目录，卸载或移动程序不影响历史数据。</li>
+    <li><b>模型调用</b>：仅当创建处理任务时，公告文本内容会发送给你所配置的模型服务商（DeepSeek / 阿里云百炼）API 进行处理。</li>
+    <li><b>密钥安全</b>：API Key 仅存于本机 config 目录，绝不出现在程序压缩包内。</li>
+    <li><b>断网行为</b>：断网时页面与历史数据仍可正常浏览；新任务会明确提示网络异常，绝不返回虚构结果。</li>
+  </ul>
+</div>
+
+<h2>九、安全退出与数据保留</h2>
+<div class="card">
+  <ul>
+    <li>推荐直接<b>关闭启动窗口</b>（或在窗口内按 <code>Ctrl+C</code>），系统会优雅停止服务。</li>
+    <li>也可运行 <code>关闭 FinExtract.bat</code> 一键停止。</li>
+    <li>关闭后重新启动，历史任务、字段与证据<b>全部保留</b>（SQLite 数据库自动保护，即使意外断电也不会损坏已提交的数据）。</li>
+    <li>重复双击启动脚本不会产生第二个实例，只会再次打开浏览器进入已运行的系统。</li>
+  </ul>
+</div>
+
+<h2>十、常见问题</h2>
+<div class="card">
+  <h3>Q0：我收到的是两个压缩包，怎么用？</h3>
+  <p>请按<b>第四章「分包安装说明」</b>把 Part 1（主程序）与 Part 2（AI 引擎）解压合并到同一文件夹。只解压其中一个会出现：缺 Part 2 时 PDF/扫描件识别失败；缺 Part 1 时没有启动器，无法运行。</p>
+  <h3>Q1：双击启动后闪退？</h3>
+  <p>请勿删除解压目录中的任何文件；右键 <code>启动 FinExtract.bat</code> → 编辑，确认路径未包含异常字符。若仍失败，运行一次 <code>FinExtract.exe</code> 查看具体错误文字。</p>
+  <h3>Q2：提示端口被占用？</h3>
+  <p>系统自动尝试 8000–8010 共 11 个端口，无需手动处理。启动窗口会显示实际使用的地址。</p>
+  <h3>Q2+：双击后浏览器迟迟没有自动打开？</h3>
+  <p>首次启动（或刚更新版本）时，Windows 安全扫描会让程序引导多花 1–3 分钟，属正常现象。启动窗口显示「启动于 http://...」后浏览器即会自动打开，请耐心等待，不要重复双击。</p>
+  <h3>Q3：上传后提示「提取核心不可用」？</h3>
+  <p>表示未检测到 <code>DEEPSEEK_API_KEY</code>。请按第三章「配置模型密钥」完成配置后重启。历史任务查看不受影响。</p>
+  <h3>Q4：智衡方案提示复核未执行？</h3>
+  <p>风险复核依赖 <code>QWEN_API_KEY</code>。未配置或额度不足时，系统会如实标注「未触发增强复核 / 复核未完成」，主提取结果不受影响。</p>
+  <h3>Q5：扫描件识别慢或为空？</h3>
+  <p>扫描件走 OCR 通道，CPU 识别每页约需数秒至数十秒。若产出为空，多为图像清晰度不足，建议提高扫描分辨率后重试。</p>
+  <h3>Q6：数据占用了太多磁盘空间？</h3>
+  <p>可备份后清理 <span class="path">%LOCALAPPDATA%\FinExtract\data\jobs\</span> 中不再需要的旧任务目录（数据库记录会保留，但该任务的原始文件与导出缓存会被移除）。</p>
+  <h3>Q7：如何彻底卸载？</h3>
+  <p>删除解压目录即可移除程序；删除 <span class="path">%LOCALAPPDATA%\FinExtract\</span> 即可移除全部本地数据。</p>
+</div>
+
+<h2>十一、故障排查速查表</h2>
+<div class="card">
+  <table>
+    <tr><th style="width:230px">现象</th><th>处理建议</th></tr>
+    <tr><td>浏览器未自动打开</td><td>手动访问启动窗口显示的地址（默认 http://127.0.0.1:8000/）</td></tr>
+    <tr><td>任务一直显示处理中</td><td>保持网络畅通；超过 5 分钟无进展时可在任务列表查看失败原因并重试</td></tr>
+    <tr><td>导出文件打不开</td><td>Excel 导出为 .xlsx 格式，请用 Office 2016 及以上版本或 WPS 打开</td></tr>
+    <tr><td>杀毒软件报警</td><td>未签名便携程序的常见误报，将 FinExtract 所在目录加入白名单即可</td></tr>
+    <tr><td>需要查看运行日志</td><td>打开 <span class="path">%LOCALAPPDATA%\FinExtract\logs\</span></td></tr>
+  </table>
+</div>
+
+<footer>
+  FinExtract V1.0 · Windows 便携版 · 本手册随程序一同分发，可打印阅读<br>
+  发布包校验：见压缩包内 docs/SHA256.txt
+</footer>
+
+</div>
+</body>
+</html>
